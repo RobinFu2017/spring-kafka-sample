@@ -1,37 +1,21 @@
 # spring-kafka-sample
 
-#### 介绍
-spring项目使用kafka的范例
+#### Introduction
+Spring project using kafka .
 
-#### 软件架构
-软件架构说明
+#### Instructions for use
 
+1.  Need to prepare kafka environment yourself.
+2.  com.robin.spring.kafka.ListenerConsumeTest : This class provides a consumption paradigm for the spring listener pattern.
+3.  com.robin.spring.kafka.ManualConsumeTest : This class provides examples of manual production and consumption.
+4.  com.robin.spring.kafka.TopicConfigTest : This class provides examples of manually creating topics.
 
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+#### Reference Document
+1. kafka official documentation
+https://kafka.apache.org/0110/documentation.html
+2. spring kafka official documentation
+https://docs.spring.io/spring-kafka/docs/2.2.12.RELEASE/reference/html/
+3. spring kafka sample on baeldung
+https://www.baeldung.com/spring-kafka
 
 
-#### 码云特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
