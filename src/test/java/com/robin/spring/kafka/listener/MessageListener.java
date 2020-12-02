@@ -1,6 +1,7 @@
 package com.robin.spring.kafka.listener;
 
 import com.robin.spring.kafka.domain.Greeting;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -8,7 +9,11 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
+
+import static java.util.concurrent.CompletableFuture.runAsync;
 
 @Component
 public class MessageListener {
@@ -56,4 +61,30 @@ public class MessageListener {
         this.greetingLatch.countDown();
     }
 
+
+    @KafkaListener(topics = "${greeting.topic.name}", containerFactory = "batchGreetingKafkaListenerContainerFactory")
+    public void batchGreetingListener(List<ConsumerRecord<String, Greeting>> records) {
+        System.out.println("batch consume records. size:" + records.size());
+        //batch consume kafka message, run async ,then await all.
+        CompletableFuture[] futures = records.stream()
+                .map(record -> runAsync(() -> listen(record)))
+                .peek(v -> sleep(50))
+                .toArray(CompletableFuture[]::new);
+
+        CompletableFuture.allOf(futures).join();
+    }
+
+    private void sleep(long mili) {
+        try {
+            Thread.sleep(mili);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void listen(ConsumerRecord<String, Greeting> record) {
+        Greeting greeting = record.value();
+        System.out.println("Recieved greeting message: " + greeting);
+        this.greetingLatch.countDown();
+    }
 }
